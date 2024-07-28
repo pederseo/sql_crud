@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Nuevo Entrenador</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        function validarFormulario() {
+            var entrenador1 = document.getElementById("entrenador1").value;
+            var pokemon1_1 = document.getElementById("pokemon1-1").value;
+            var pokemon1_2 = document.getElementById("pokemon1-2").value;
+
+            var entrenador2 = document.getElementById("entrenador2").value;
+            var pokemon2_1 = document.getElementById("pokemon2-1").value;
+            var pokemon2_2 = document.getElementById("pokemon2-2").value;
+
+            if (entrenador1 == entrenador2 || pokemon1_1 == pokemon2_1 || pokemon1_1 == pokemon2_2 || pokemon1_2 == pokemon2_1 || pokemon1_2 == pokemon2_2) {
+                alert("Los datos de entrenador y pokemons no pueden coincidir entre ambos equipos.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex flex-col">
+    <nav class="bg-yellow-400 w-full p-4 rounded-lg shadow-md flex justify-between items-center">
+        <div class="flex">
+            <a href="/" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Home</a>
+        </div>
+        <div class="flex-grow flex justify-center space-x-4">
+            <a href="/registro" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Registro</a>
+            <a href="/batalla" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Batalla</a>
+            <a href="/resultados" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Resultados</a>
+        </div>
+    </nav>
+
+    <div class="flex justify-center mt-10">
+        <form class="bg-white p-10 border-2 border-yellow-400 rounded-2xl shadow-lg text-center max-w-4xl w-full" action="{{ url_for('batalla') }}" method="POST" onsubmit="return validarFormulario()">
+            <div class="flex justify-between mb-6">
+                <div class="flex flex-col items-center w-1/2 px-4">
+                    <img src="../static/user.png" alt="img entrenador" class="w-20 h-20 mb-4">
+                    <h2 class="text-blue-800 text-xl mb-2">Entrenador 2</h2>
+                    <select name="entrenador2" id="entrenador2" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for entrenador in lista_entrenadores %}
+                            <option value="{{ entrenador.id }}">{{ entrenador.nombre }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <h2 class="text-blue-800 text-xl mb-2">Pokemon 1</h2>
+                    <select name="pokemon2-1" id="pokemon2-1" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for pokemon in lista_pokemones %}
+                            <option value="{{ pokemon.id }}">{{ pokemon.nombre }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <h2 class="text-blue-800 text-xl mb-2">Pokemon 2</h2>
+                    <select name="pokemon2-2" id="pokemon2-2" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for pokemon in lista_pokemones %}
+                            <option value="{{ pokemon.id }}">{{ pokemon.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex flex-col items-center w-1/2 px-4">
+                    <img src="../static/user.png" alt="img entrenador" class="w-20 h-20 mb-4">
+                    <h2 class="text-blue-800 text-xl mb-2">Entrenador 1</h2>
+                    <select name="entrenador1" id="entrenador1" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for entrenador in lista_entrenadores %}
+                            <option value="{{ entrenador.id }}">{{ entrenador.nombre }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <h2 class="text-blue-800 text-xl mb-2">Pokemon 1</h2>
+                    <select name="pokemon1-1" id="pokemon1-1" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for pokemon in lista_pokemones %}
+                            <option value="{{ pokemon.id }}">{{ pokemon.nombre }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <h2 class="text-blue-800 text-xl mb-2">Pokemon 2</h2>
+                    <select name="pokemon1-2" id="pokemon1-2" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+                        {% for pokemon in lista_pokemones %}
+                            <option value="{{ pokemon.id }}">{{ pokemon.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-center">
+                <button type="submit" value="iniciar-batalla" class="bg-red-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-red-600">Iniciar batalla</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

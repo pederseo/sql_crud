@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex flex-col">
+    <nav class="bg-yellow-400 w-full p-4 rounded-lg shadow-md flex justify-between items-center">
+        <div class="flex">
+            <a href="/" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Home</a>
+        </div>
+        <div class="flex-grow flex justify-center space-x-4">
+            <a href="/registro" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Registro</a>
+            <a href="/batalla" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Batalla</a>
+            <a href="/resultados" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Resultados</a>
+        </div>
+    </nav>
+
+    <div class="flex flex-col items-center justify-center flex-grow">
+        <div class="bg-white p-10 border-2 border-yellow-400 rounded-2xl shadow-lg text-center max-w-lg mx-4">
+            <p class="text-blue-800 text-2xl mb-6">¡Bienvenido a la página donde podrás ser tú el que gestiona la base de datos de una batalla Pokémon!</p>
+            <button onclick="location.href='/registro'" class="bg-red-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-red-600">Empezar</button>
+        </div>
+    </div>
+</body>
+</html>

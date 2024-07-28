@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Nuevo Entrenador</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex flex-col">
+    <nav class="bg-yellow-400 w-full p-4 rounded-lg shadow-md flex justify-between items-center">
+        <div class="flex">
+            <a href="/" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Home</a>
+        </div>
+        <div class="flex-grow flex justify-center space-x-4">
+            <a href="/registro" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Registro</a>
+            <a href="/batalla" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Batalla</a>
+            <a href="/resultados" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Resultados</a>
+        </div>
+    </nav>
+
+    <div class="bg-white p-10 border-2 border-yellow-400 rounded-2xl shadow-lg w-4/5 max-w-2xl mx-auto mt-10">
+        <h2 class="text-blue-800 text-2xl mb-6">Nuevo Entrenador</h2>
+        <form action="{{ url_for('registro') }}" method="POST">
+            <div class="mb-4">
+                <label for="nombre" class="block text-gray-700">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+            <div class="mb-4">
+                <label for="medallas" class="block text-gray-700">Medallas:</label>
+                <input type="number" id="medallas" name="medallas" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+            <div>
+                <input type="submit" value="Registrar" class="bg-green-500 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-green-600">
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white p-10 border-2 border-yellow-400 rounded-2xl shadow-lg w-4/5 max-w-2xl mx-auto mt-10">
+        <h2 class="text-blue-800 text-2xl mb-6">Entrenadores Registrados</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Medallas</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Editar</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for trainer in lista_entrenadores %}
+                    <tr id="row_{{ trainer.id }}">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ trainer.id }}</td>
+                        <td id="name_{{ trainer.id }}" class="px-6 py-4 whitespace-nowrap">{{ trainer.nombre }}</td>
+                        <td id="medals_{{ trainer.id }}" class="px-6 py-4 whitespace-nowrap">{{ trainer.medallas }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="#" class="text-blue-600 hover:text-blue-900" onclick="editRow({{ trainer.id }})">Editar</a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="{{ url_for('eliminar_entrenador_route', id=trainer.id) }}" class="text-red-600 hover:text-red-900">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function editRow(id) {
+            var row = document.getElementById('row_' + id);
+            var nameCell = document.getElementById('name_' + id);
+            var medalsCell = document.getElementById('medals_' + id);
+
+            // Cambiar el contenido de las celdas a campos de formulario
+            nameCell.innerHTML = '<input type="text" name="nombre" value="' + nameCell.innerText + '" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300">';
+            medalsCell.innerHTML = '<input type="number" name="medallas" value="' + medalsCell.innerText + '" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300">';
+
+            // Reemplazar el botón de editar con un botón de guardar
+            var editButton = row.querySelector('a.text-blue-600');
+            editButton.innerHTML = 'Guardar';
+            editButton.className = 'text-green-600 hover:text-green-900';
+            editButton.onclick = function() {
+                saveRow(id);
+            };
+        }
+
+        function saveRow(id) {
+            var row = document.getElementById('row_' + id);
+            var nameInput = row.querySelector('input[name="nombre"]');
+            var medalsInput = row.querySelector('input[name="medallas"]');
+
+            var formData = new FormData();
+            formData.append('id', id);
+            formData.append('nombre', nameInput.value);
+            formData.append('medallas', medalsInput.value);
+
+            fetch('{{ url_for("registro") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Recargar la página para reflejar los cambios
+                window.location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

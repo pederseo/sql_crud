@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados Batallas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex flex-col">
+    <nav class="bg-yellow-400 w-full p-4 rounded-lg shadow-md flex justify-between items-center">
+        <div class="flex">
+            <a href="/" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Home</a>
+        </div>
+        <div class="flex-grow flex justify-center space-x-4">
+            <a href="/registro" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Registro</a>
+            <a href="/batalla" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Batalla</a>
+            <a href="/resultados" class="text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-800 hover:text-white">Resultados</a>
+        </div>
+    </nav>
+
+    <div class="w-4/5 mx-auto my-10 bg-white p-10 border-2 border-yellow-400 rounded-2xl shadow-lg">
+        <div class="text-center text-2xl text-blue-800 mb-6">Resultado Batallas</div>
+        <table class="w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="border border-gray-300 p-2 bg-blue-800 text-white">ID Batalla</th>
+                    <th class="border border-gray-300 p-2 bg-blue-800 text-white">Equipo 1</th>
+                    <th class="border border-gray-300 p-2 bg-blue-800 text-white">Equipo 2</th>
+                    <th class="border border-gray-300 p-2 bg-blue-800 text-white">Ganador</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for resultado in lista_resultados %}
+                <tr id="row_{{ resultado.id }}">
+                    <td class="border border-gray-300 p-2" id="id_batalla_{{ resultado.id }}">{{ resultado.id_batalla }}</td>
+                    <td class="border border-gray-300 p-2" id="equipo1_{{ resultado.id }}">{{ resultado.equipo1 }}</td>
+                    <td class="border border-gray-300 p-2" id="equipo2_{{ resultado.id }}">{{ resultado.equipo2 }}</td>
+                    <td class="border border-gray-300 p-2" id="ganador_{{ resultado.id }}">{{ resultado.ganador }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
