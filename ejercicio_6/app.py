@@ -10,6 +10,7 @@ def index():
 #_________________________________________________________________________________________
 
 
+
 @app.route('/registro', methods=['POST', 'GET'])
 def registro():
     if request.method == 'POST':
@@ -55,9 +56,6 @@ def batalla():
     lista_entrenadores = mostrar_entrenadores()
     lista_pokemones = mostrar_pokemones()
     return render_template('batalla.html', lista_entrenadores=lista_entrenadores, lista_pokemones=lista_pokemones)
-
-
-
 #_________________________________________________________________________________________
 
 
@@ -67,51 +65,10 @@ def resultados():
     lista_resultados = mostrar_resultados()
     return render_template('resultados.html', lista_resultados=lista_resultados)
 
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-# @app.route('/agregar_entrenador', methods=['POST'])
-# def agregar_entrenador():
-#     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#     if request.method == 'POST':
-#         nombre = request.form['nombre']
-#         cursor.execute("INSERT INTO entrenadores (nombre) VALUES (%s)", (nombre,))
-#         conn.commit()
-#         flash('Entrenador agregado', 'success')
-#         return redirect(url_for('entrenadores'))  
-
-
-# @app.route('/editar/<id>', methods = ['POST', 'GET'])
-# def editar_entrenador (id):
-#     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#     cursor.execute('SELECT * FROM entrenadores WHERE id = %s', (id,))
-#     entrenador = cursor.fetchall() #recupera todos los resultados de la consulta
-#     cursor.close() #cierra el cursor
-#     return render_template('editar.html', entrenador = entrenador[0])
-
-
-# @app.route('/actualizar/<id>', methods = ['POST'])
-# def actualizar_entrenador(id):
-#     if request.method == 'POST':
-#         nombre = request.form['nombre']
-         
-#         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#         cursor.execute (""" 
-#                     UPDATE entrenadores 
-#                     SET nombre = %s
-#                     WHERE id = %s """, (nombre, id))
-#         flash('Entrenador actualizado', 'success')
-#         conn.commit()
-#         return redirect(url_for('entrenadores'))
-    
- 
-# @app.route('/borrar/<string:id>', methods = ['POST','GET'])
-# def borrar_entrenador(id):
-#     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-   
-#     cursor.execute('DELETE FROM entrenadores WHERE id = {0}'.format(id))
-#     conn.commit()
-#     flash('Entrenador borrado', 'success')
-#     return redirect(url_for('entrenadores'))
 
 
 
